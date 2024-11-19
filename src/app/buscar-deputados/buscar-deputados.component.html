@@ -1,0 +1,22 @@
+<h1>Buscar deputados</h1>
+<form [formGroup]="formBuscarDeputado">
+    <label for="nome" class="form-label">Nome do deputado:</label>
+    <input class="form-control" type="text" name="nome" id="nome" formControlName="nome" placeholder="Insira o nome do(a) deputado(a)">
+    <input class="btn btn-primary mt-3" type="button" value="Buscar" [disabled]="formBuscarDeputado.invalid"
+        (click)="buscar()">
+</form>
+
+<div class="d-flex justify-content-center">
+    <div *ngIf="deputado != undefined" class="card mb-2" style="width: 15rem;">
+        <div *ngFor="let dptd of deputado">
+            <img [src]="dptd.urlFoto" class="card-img-top" alt="Foto do deputado">
+            <div class="card-body">
+                <h5 class="card-title">{{dptd.nome}}</h5>
+                <ul class="card-text">
+                    <li>Estado de atuação: {{dptd.siglaUf}}</li>
+                    <li>Partido político: {{dptd.siglaPartido}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
