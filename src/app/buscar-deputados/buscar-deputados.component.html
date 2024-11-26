@@ -1,21 +1,41 @@
-<h1>Buscar deputados</h1>
-<form [formGroup]="formBuscarDeputado">
-    <label for="nome" class="form-label">Nome do deputado:</label>
-    <input class="form-control" type="text" name="nome" id="nome" formControlName="nome" placeholder="Insira o nome do(a) deputado(a)">
-    <input class="btn btn-primary mt-3" type="button" value="Buscar" [disabled]="formBuscarDeputado.invalid"
-        (click)="buscar()">
-</form>
+<div class="container">
+    <h1>Buscar deputados</h1>
+    <form [formGroup]="formBuscarDeputado" class="mb-3">
+        <div class="col-12">
+            <label for="nome" class="form-label">Nome do deputado:</label>
+        </div>
+        <div class="col-12">
+            <input class="form-control" type="text" name="nome" id="nome" formControlName="nome"
+                placeholder="Insira o nome do(a) deputado(a)">
+        </div>
+        <div class="col-12">
+            <input class="btn btn-primary mt-3 mb-3" type="button" value="Buscar"
+                [disabled]="formBuscarDeputado.invalid" (click)="buscarPorNome()">
+        </div>
+        <div class="col-12">
+            <label for="estado" class="form-label">Estado do deputado:</label>
+        </div>
+        <div class="col-12">
+            <select class="form-select" name="estado" id="estado" formControlName="estado" (click)="buscarPorEstado()">
+                <option value="" disabled selected hidden>Por favor selecione um estado do deputado<option>
+                <option *ngFor="let uf of estados" value="{{uf}}">{{uf}}</option>
+            </select>
+        </div>
+    </form>
 
-<div class="d-flex justify-content-center">
-    <div *ngIf="deputado != undefined" class="card mb-2" style="width: 15rem;">
-        <div *ngFor="let dptd of deputado">
-            <img [src]="dptd.urlFoto" class="card-img-top" alt="Foto do deputado">
-            <div class="card-body">
-                <h5 class="card-title">{{dptd.nome}}</h5>
-                <ul class="card-text">
-                    <li>Estado de atuação: {{dptd.siglaUf}}</li>
-                    <li>Partido político: {{dptd.siglaPartido}}</li>
-                </ul>
+    <div class="d-flex justify-content-evenly">
+        <div class="row">
+            <div *ngFor="let dptd of deputado" class="col-4">
+                <div *ngIf="deputado != undefined" class="card mb-2" style="width: 15rem;">
+                    <img [src]="dptd.urlFoto" class="card-img-top" alt="Foto do deputado">
+                    <div class="card-body">
+                        <h5 class="card-title">{{dptd.nome}}</h5>
+                        <ul class="card-text">
+                            <li>Estado de atuação: {{dptd.siglaUf}}</li>
+                            <li>Partido político: {{dptd.siglaPartido}}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

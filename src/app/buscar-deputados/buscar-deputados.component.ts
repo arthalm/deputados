@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DeputadoService } from '../deputado.service';
+import { DeputadoService } from '../model/deputado.service';
 import { Deputado } from '../model/deputado';
+import { Estados } from '../model/estados';
 
 @Component({
   selector: 'app-buscar-deputados',
@@ -13,19 +14,27 @@ export class BuscarDeputadosComponent {
 
   formBuscarDeputado: FormGroup;
   deputado: Deputado[] | undefined;
+  estados: string[] = Object.values(Estados);
 
   constructor(private fb: FormBuilder, private ds: DeputadoService) {
       this.formBuscarDeputado = this.fb.group({
-        nome: ['', [Validators.required, Validators.minLength(3)]]
+        nome: ['', [Validators.required, Validators.minLength(3)]],
+        estado: ['']
       });
       this.deputado = undefined;
   };
 
-  buscar() {
+  buscarPorNome() {
     const nome = this.formBuscarDeputado.value.nome;
-    this.ds.buscarDeputadoPorNome(nome).subscribe(res => {
+    this.ds.buscarDeputadosPorNome(nome).subscribe(res => {
       this.deputado = res.dados;
-      console.log (res.dados)
+    });
+  };
+
+  buscarPorEstado() {
+    const estado = this.formBuscarDeputado.value.estado;
+    this.ds.buscarDeputadosPorUf(estado).subscribe(res => {
+      this.deputado = res.dados;
     });
   };
 };
